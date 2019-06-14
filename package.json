@@ -41,21 +41,21 @@
     "leveldown": "^5.1.0",
     "merge": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "readable-stream": "^2.3.3"
+    "readable-stream": "^3.4.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.2.0",
     "coveralls": "^2.11.12",
     "gh-pages": "^0.11.0",
     "ink-docstrap": "bookchin/docstrap",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.0",
     "jshint": "^2.9.3",
-    "memdown": "^1.2.0",
-    "mocha": "^3.0.2",
+    "memdown": "^4.0.0",
+    "mocha": "^3.5.3",
     "noisegen": "^1.0.0",
-    "proxyquire": "^1.7.10",
+    "proxyquire": "^2.1.0",
     "rimraf": "^2.5.4",
-    "sinon": "^1.17.5"
+    "sinon": "^7.3.2"
   }
 }
