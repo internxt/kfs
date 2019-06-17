@@ -23,7 +23,7 @@ describe('WritableFileStream', function() {
         expect(err.message).to.equal('Failed');
         done();
       });
-      ws.write(Buffer('test'));
+      ws.write(Buffer.from('test'));
     });
 
   });

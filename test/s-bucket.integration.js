@@ -29,9 +29,9 @@ describe('Sbucket/Integration', function() {
   describe('#list', function() {
 
     before(function(done) {
-      var file0 = new Buffer(65536 * 2);
-      var file1 = new Buffer(65536 * 2);
-      var file2 = new Buffer(65536 * 4);
+      var file0 = Buffer.alloc(65536 * 2);
+      var file1 = Buffer.alloc(65536 * 2);
+      var file2 = Buffer.alloc(65536 * 4);
       var index = 0;
       async.eachSeries([file0, file1, file2], function(buf, next) {
         buf.fill(1);

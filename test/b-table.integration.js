@@ -29,7 +29,7 @@ describe('Btable/Integration', function() {
   describe('#writeFile', function() {
 
     it('should write the file to the database', function(done) {
-      var fileData = new Buffer('hello kfs!');
+      var fileData = Buffer.from('hello kfs!');
       var fileHash = crypto.createHash('sha1').update(fileData).digest('hex');
       db.writeFile(fileHash, fileData, function(err) {
         expect(err).to.equal(null);
@@ -42,7 +42,7 @@ describe('Btable/Integration', function() {
         1,
         new Error('Failed')
       );
-      db.writeFile('0000', Buffer([]), function(err) {
+      db.writeFile('0000', Buffer.from([]), function(err) {
         _getSbucketForKey.restore();
         expect(err.message).to.equal('Failed');
         done();
@@ -54,7 +54,7 @@ describe('Btable/Integration', function() {
   describe('#createWriteStream', function() {
 
     it('should write the stream to the database', function(done) {
-      var fileData = new Buffer('kfs hello!');
+      var fileData = Buffer.from('kfs hello!');
       var fileHash = crypto.createHash('sha1').update(fileData).digest('hex');
       db.createWriteStream(fileHash, function(err, writableStream) {
         expect(err).to.equal(null);
@@ -177,7 +177,7 @@ describe('Btable/Integration', function() {
   describe('#readFile', function() {
 
     it('should read the file from the database', function(done) {
-      var fileData = new Buffer('hello kfs!');
+      var fileData = Buffer.from('hello kfs!');
       var fileHash = crypto.createHash('sha1').update(fileData).digest('hex');
       db.readFile(fileHash, function(err, result) {
         expect(err).to.equal(null);
@@ -203,11 +203,11 @@ describe('Btable/Integration', function() {
   describe('#createReadStream', function() {
 
     it('should write the stream to the database', function(done) {
-      var fileData = new Buffer('kfs hello!');
+      var fileData = Buffer.from('kfs hello!');
       var fileHash = crypto.createHash('sha1').update(fileData).digest('hex');
       db.createReadStream(fileHash, function(err, readableStream) {
         expect(err).to.equal(null);
-        var data = Buffer([]);
+        var data = Buffer.from([]);
         readableStream.on('data', function(chunk) {
           data = Buffer.concat([data, chunk]);
         });
@@ -236,7 +236,7 @@ describe('Btable/Integration', function() {
   describe('#exists', function() {
 
     it('should callback true for a existing key', function(done) {
-      var fileData = new Buffer('hello kfs!');
+      var fileData = Buffer.from('hello kfs!');
       var fileHash = crypto.createHash('sha1').update(fileData).digest('hex');
       db.exists(fileHash, function(err, exists) {
         expect(exists).to.equal(true);
@@ -269,7 +269,7 @@ describe('Btable/Integration', function() {
   describe('#unlink', function() {
 
     it('should destroy the file from the database', function(done) {
-      var fileData = new Buffer('hello kfs!');
+      var fileData = Buffer.from('hello kfs!');
       var fileHash = crypto.createHash('sha1').update(fileData).digest('hex');
       db.unlink(fileHash, function(err) {
         expect(err).to.equal(null);

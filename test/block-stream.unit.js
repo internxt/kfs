@@ -21,12 +21,13 @@ describe('BlockStream', function() {
       });
       bs.on('end', function() {
         expect(buf).to.have.lengthOf(24);
-        expect(Buffer.compare(buf.slice(18), Buffer(6).fill(0))).to.equal(0);
+        expect(Buffer.compare(buf.slice(18),
+        Buffer.alloc(6).fill(0))).to.equal(0);
         done();
       });
-      bs.write(Buffer(6).fill(1));
-      bs.write(Buffer(6).fill(1));
-      bs.write(Buffer(6).fill(1));
+      bs.write(Buffer.alloc(6).fill(1));
+      bs.write(Buffer.alloc(6).fill(1));
+      bs.write(Buffer.alloc(6).fill(1));
       bs.end();
     });
 

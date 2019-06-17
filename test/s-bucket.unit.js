@@ -175,7 +175,7 @@ describe('Sbucket', function() {
       ).returns(_ws);
       sBucket.writeFile(
         utils.createReferenceId(),
-        Buffer('test'),
+        Buffer.from('test'),
         function(err) {
           _createWriteStream.restore();
           expect(err.message).to.equal('Failed');

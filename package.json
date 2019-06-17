@@ -38,6 +38,7 @@
   "dependencies": {
     "async": "^2.6.2",
     "commander": "^2.9.0",
+    "ink-docstrap": "^1.3.2",
     "leveldown": "^5.1.0",
     "merge": "^1.2.0",
     "mkdirp": "^0.5.1",
@@ -47,7 +48,6 @@
     "chai": "^4.2.0",
     "coveralls": "^2.11.12",
     "gh-pages": "^0.11.0",
-    "ink-docstrap": "bookchin/docstrap",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.0",
     "jshint": "^2.9.3",

@@ -195,7 +195,7 @@ describe('Btable', function() {
     it('should return the correct xor value', function() {
       expect(
         Btable.prototype._getSbucketIndexForKey.call({
-          _rid: Buffer('00', 'hex')
+          _rid: Buffer.from('00', 'hex')
         }, '00')
       ).to.equal(96);
     });
