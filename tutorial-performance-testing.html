@@ -9,8 +9,7 @@
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-
-	<script src="scripts/highlight.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
 
 	<link type="text/css" rel="stylesheet" href="styles/site.storj.css">
 
@@ -21,7 +20,8 @@
 <div class="navbar navbar-default navbar-fixed-top ">
 <div class="container">
 	<div class="navbar-header">
-		<a class="navbar-brand" style="background-image:url(img/storj-kfs.svg)"  href="index.html">KFS</a>
+		<a class="navbar-brand" href="index.html"><img class="branding-logo" src="img/storj-kfs.svg"
+		alt="logo"/>KFS</a>
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
@@ -60,16 +60,18 @@
 			</li>
 			
 		</ul>
-		<div class="col-sm-3 col-md-4">
-            <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        
 	</div>
 
 </div>
@@ -92,64 +94,67 @@
 </header>
 
 <article>
-    <p>One major hypothesis of this project is that KFS enhances performance over 
-the use a of a standard LevelDB instance. This is due to the nature of how 
-KFS bounds the cost of LevelDB's compaction mechanism by sharding a data set 
-over a series of size-capped LevelDB instances. A set of performance tests 
-were run on a standard LevelDB along with our version which leverages KFS. 
-This is a short summary of our findings and their implications. </p>
-<h3>Experiment Design</h3><p>A series of one hundred trials were run in sequential order. 
-Each trial consisted of measuring the execution time for a complete read, 
-write, and unlink (delete) operation on file sizes of 8, 16, 32, 64, 128, 256 
-and 512 MiB. Keeping in mind that files are split into discrete 128KiB key/value 
-pairs, keyed by a hash of the content of the entire file, this means that the 
+    <p>One major hypothesis of this project is that KFS enhances performance over
+the use a of a standard LevelDB instance. This is due to the nature of how
+KFS bounds the cost of LevelDB's compaction mechanism by sharding a data set
+over a series of size-capped LevelDB instances. A set of performance tests
+were run on a standard LevelDB along with our version which leverages KFS.
+This is a short summary of our findings and their implications.</p>
+<h3>Experiment Design</h3>
+<p>A series of one hundred trials were run in sequential order.
+Each trial consisted of measuring the execution time for a complete read,
+write, and unlink (delete) operation on file sizes of 8, 16, 32, 64, 128, 256
+and 512 MiB. Keeping in mind that files are split into discrete 128KiB key/value
+pairs, keyed by a hash of the content of the entire file, this means that the
 actual number of read/write/delete operations are equal to the size of the file
 divided by 128KiB.</p>
-<p>Of particular note is that each sequential test run adds approximately 1GiB to 
-the full size of the database (since unlinks only tombstone entries). Our 
-number of trials is consistent with our assertion that LevelDBs performance 
+<p>Of particular note is that each sequential test run adds approximately 1GiB to
+the full size of the database (since unlinks only tombstone entries). Our
+number of trials is consistent with our assertion that LevelDBs performance
 degrades significantly after the size of the database exceeds 100GiB.</p>
-<p>This experiment was conducted for both a vanilla (standard) LevelDB and a 
-version using the KFS protocol. In addition we ran the experiment using 
-a hard disk drive (HDD) and solid state drive (SSD). </p>
-<h3>Results</h3><p>An overview plot displaying the execution time by file size and operation for 
-each trial indicates some difference between KFS and a vanilla LevelDB. At a 
-high level it appears vanilla LevelDB had a higher variance across many 
-categories. It is our belief that this variance is due to compaction triggering 
+<p>This experiment was conducted for both a vanilla (standard) LevelDB and a
+version using the KFS protocol. In addition we ran the experiment using
+a hard disk drive (HDD) and solid state drive (SSD).</p>
+<h3>Results</h3>
+<p>An overview plot displaying the execution time by file size and operation for
+each trial indicates some difference between KFS and a vanilla LevelDB. At a
+high level it appears vanilla LevelDB had a higher variance across many
+categories. It is our belief that this variance is due to compaction triggering
 in LevelDB as the size of the single instance grows quickly.</p>
-<p>Since data is spread in a uniform fashion across a series of LevelDBs in KFS, 
-this compaction triggering happens less frequently and has a much smaller 
+<p>Since data is spread in a uniform fashion across a series of LevelDBs in KFS,
+this compaction triggering happens less frequently and has a much smaller
 impact.</p>
 <hr>
 <p><img src="doc/img/performance-test-overview-kfs-vs-vanilla-ssd-128.png" alt="Summary Chart SSD"></p>
 <p><img src="doc/img/performance-test-overview-kfs-vs-vanilla-hdd-128.png" alt="Summary Chart HDD"></p>
 <hr>
 <p>Upon closer inspection the data shows that in every category the mean execution
-time is lower for KFS for all categories. As for variance, the story is a bit more 
-complicated. On SSD vanilla LevelDB has much greater variance than KFS for writes and 
-unlinks but more consistent for reads. On HDD both KFS and vanilla show greater 
-variance, but again KFS performs more consistently on writes and unlinks. </p>
+time is lower for KFS for all categories. As for variance, the story is a bit more
+complicated. On SSD vanilla LevelDB has much greater variance than KFS for writes and
+unlinks but more consistent for reads. On HDD both KFS and vanilla show greater
+variance, but again KFS performs more consistently on writes and unlinks.</p>
 <hr>
-<p>Mean execution time comparison for SSD and HDD. </p>
+<p>Mean execution time comparison for SSD and HDD.</p>
 <p><img src="doc/img/mean-by-operation-and-db-ssd-128.png" alt="Mean Comparison SSD"></p>
 <p><img src="doc/img/mean-by-operation-and-db-hdd-128.png" alt="Mean Comparison HDD"></p>
-<p>Standard deviation execution time comparison for SSD and HDD. </p>
+<p>Standard deviation execution time comparison for SSD and HDD.</p>
 <p><img src="doc/img/sd-by-operation-and-db-ssd-128.png" alt="Standard Deviation Comp SSD"></p>
 <p><img src="doc/img/sd-by-operation-and-db-hdd-128.png" alt="Standard Deviation Comp HDD"></p>
 <hr>
-<p>We ran two sided 
-<a href="http://www.stat.yale.edu/Courses/1997-98/101/sigtest.htm">significant tests</a> 
+<p>We ran two sided
+<a href="http://www.stat.yale.edu/Courses/1997-98/101/sigtest.htm">significant tests</a>
 on each combination of operation and file size with a p-value cut-off at .05.
-For reads at 8, 16, 32, 64, 128 and 256 MiB file sizes, along with unlinks at 64 MiB we are 
-unable to reject the null hypothesis. Or in other words, we are unable to suggest KFS 
-performs better than a vanilla LevelDb in those scenarios. For the rest, we did achieve 
-a 95% confidence level. This suggests that our measurements are not the 
-result of a statistical fluke and KFS introduces meaningful change for those operations 
-and file sizes. Please note that any confidence level of 100% is an artifact of rounding. 
+For reads at 8, 16, 32, 64, 128 and 256 MiB file sizes, along with unlinks at 64 MiB we are
+unable to reject the null hypothesis. Or in other words, we are unable to suggest KFS
+performs better than a vanilla LevelDb in those scenarios. For the rest, we did achieve
+a 95% confidence level. This suggests that our measurements are not the
+result of a statistical fluke and KFS introduces meaningful change for those operations
+and file sizes. Please note that any confidence level of 100% is an artifact of rounding.
 In this scenario a p-value of 0 is theoretically impossible.</p>
 <hr>
 <p><img src="doc/img/kfs-vs-vanilla-two-sided-test-128.png" alt="Two Sided Test"></p>
-<h3>Conclusion</h3><p>While P-Values should not be followed blindly, the data does indicate that 
+<h3>Conclusion</h3>
+<p>While P-Values should not be followed blindly, the data does indicate that
 the KFS protocol gives statistically significant gains in speed and consistency.</p>
 <p>To reproduce the data generated for these tests:</p>
 <ul>
@@ -158,10 +163,10 @@ the KFS protocol gives statistically significant gains in speed and consistency.
 <li>Run <code>npm install</code> from the project root directory</li>
 <li>Run <code>npm run benchmark [iterations] [path_to_write_results]</code></li>
 </ul>
-<p>You can set the path to the database to create using the <code>KFS_PERF_DIR</code> 
-environment variable for testing on different types of drives. If no path to 
+<p>You can set the path to the database to create using the <code>KFS_PERF_DIR</code>
+environment variable for testing on different types of drives. If no path to
 write results to is specified, they will be written to stdout.</p>
-<p>If you want to experiment with chunk size (discrete key/value pairs associated 
+<p>If you want to experiment with chunk size (discrete key/value pairs associated
 with a file), modify the <code>C</code> constant in <code>lib/constants.js</code>.</p>
 </article>
 
@@ -177,20 +182,22 @@ with a file), modify the <code>C</code> constant in <code>lib/constants.js</code
 </div>
 </div>
 
-<div class="modal fade" id="searchResults">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Search results</h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div>
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 
 <footer>
 
@@ -200,7 +207,7 @@ with a file), modify the <code>C</code> constant in <code>lib/constants.js</code
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
@@ -208,7 +215,9 @@ with a file), modify the <code>C</code> constant in <code>lib/constants.js</code
 
 <script src="scripts/docstrap.lib.js"></script>
 <script src="scripts/toc.js"></script>
-<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
 
 <script>
 $( function () {
@@ -218,7 +227,7 @@ $( function () {
 		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
 	} );
 
-	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
 		var $this = $( this );
 
 		var example = $this.find( "code" );
@@ -236,24 +245,25 @@ $( function () {
 		if ( lang ) {
 
 			$this
-			.addClass( lang )
+			.addClass( "sunlight-highlight-" + lang )
 			.addClass( "linenums" )
 			.html( example.html() );
 
 		}
 	} );
 
-	$('pre').each(function(i, block) {
-		hljs.highlightBlock(block);
-	});
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
 
 	$.catchAnchorLinks( {
         navbarOffset: 10
 	} );
 	$( "#toc" ).toc( {
 		anchorName  : function ( i, heading, prefix ) {
-			var id = $( heading ).attr( "id" );
-			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+			return $( heading ).attr( "id" ) || ( prefix + i );
 		},
 		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
 		showAndHide : false,
@@ -279,11 +289,13 @@ $( function () {
 <!--Google Analytics-->
 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		SearcherDisplay.init();
-	});
-</script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
 
 </body>
 </html>

@@ -9,8 +9,7 @@
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-
-	<script src="scripts/highlight.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
 
 	<link type="text/css" rel="stylesheet" href="styles/site.storj.css">
 
@@ -21,7 +20,8 @@
 <div class="navbar navbar-default navbar-fixed-top ">
 <div class="container">
 	<div class="navbar-header">
-		<a class="navbar-brand" style="background-image:url(img/storj-kfs.svg)"  href="index.html">KFS</a>
+		<a class="navbar-brand" href="index.html"><img class="branding-logo" src="img/storj-kfs.svg"
+		alt="logo"/>KFS</a>
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
@@ -60,16 +60,18 @@
 			</li>
 			
 		</ul>
-		<div class="col-sm-3 col-md-4">
-            <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        
 	</div>
 
 </div>
@@ -92,20 +94,27 @@
 </header>
 
 <article>
-    <p>This tutorial covers everything you need to know about using KFS within your 
-application. KFS is based on LevelDB, an embedded key-value store, but the 
-interface for interacting with a KFS is focused on the storage and retrieval 
+    <p>This tutorial covers everything you need to know about using KFS within your
+application. KFS is based on LevelDB, an embedded key-value store, but the
+interface for interacting with a KFS is focused on the storage and retrieval
 of files and arbitrary binary streams.</p>
-<h3>Getting Started</h3><p>To create and open a new KFS database (or open an existing one), simply 
+<h3>Getting Started</h3>
+<p>To create and open a new KFS database (or open an existing one), simply
 require the module and create a <a href="Btable.html">Btable</a> object:</p>
 <pre class="prettyprint source"><code>const kfs = require('kfs');
-const myDataStore = kfs('/path/to/database.kfs');</code></pre><p>That's it, Your data store is ready to use!</p>
-<h3>Check if a File Exists</h3><p>To check if a file exists at a given key, use the <a href="Btable.html#exists">Btable#exists</a> method:</p>
+const myDataStore = kfs('/path/to/database.kfs');
+</code></pre>
+<p>That's it, Your data store is ready to use!</p>
+<h3>Check if a File Exists</h3>
+<p>To check if a file exists at a given key, use the <a href="Btable.html#exists">Btable#exists</a> method:</p>
 <pre class="prettyprint source"><code>const some160bitKey = 'adc83b19e793491b1c6ea0fd8b46cd9f32e592fc';
 
 myDataStore.exists(some160bitKey, (err, exists) => {
   console.log('The file ' + (exists ? 'DOES' : 'DOES NOT') + ' exist!');
-});</code></pre><h3>Check if a File Can Be Stored</h3><p>To check the available space for a file at a given key, use the 
+});
+</code></pre>
+<h3>Check if a File Can Be Stored</h3>
+<p>To check the available space for a file at a given key, use the
 Btable#getSpaceAvailableForKey method:</p>
 <pre class="prettyprint source"><code>const fileSizeInBytes = 4096;
 
@@ -117,21 +126,33 @@ myDataStore.stat(some160bitKey, (err, result) => {
   let enoughFreeSpace = result.sBucketStats.free > fileSizeInBytes;
 
   console.log('There ' + (enoughFreeSpace ? 'IS': 'IS NOT') + ' enough space!');
-});</code></pre><h3>Write a File to the Data Store</h3><p>To write a raw buffer to the data store, use the <a href="Btable.html#writeFile">Btable#writeFile</a> 
+});
+</code></pre>
+<h3>Write a File to the Data Store</h3>
+<p>To write a raw buffer to the data store, use the <a href="Btable.html#writeFile">Btable#writeFile</a>
 method:</p>
 <pre class="prettyprint source"><code>const myFileBuffer = Buffer.from([/* ... */]);
 
 myDataStore.writeFile(some160bitKey, myFileBuffer, (err) => {
   console.log('File ' + (err ? 'WAS NOT' : 'WAS') + ' written!');
-});</code></pre><h3>Read a File from the Data Store</h3><p>To read a file into memory from the data store, use the <a href="Btable.html#readFile">Btable#readFile</a> 
+});
+</code></pre>
+<h3>Read a File from the Data Store</h3>
+<p>To read a file into memory from the data store, use the <a href="Btable.html#readFile">Btable#readFile</a>
 method:</p>
 <pre class="prettyprint source"><code>myDataStore.readFile(some160bitKey, (err, fileBuffer) => {
   console.log(err || fileBuffer);
-});</code></pre><h3>Remove a File from the Data Store</h3><p>To remove a file from the data store, use the <a href="Btable.html#unlink">Btable#unlink</a> method:</p>
+});
+</code></pre>
+<h3>Remove a File from the Data Store</h3>
+<p>To remove a file from the data store, use the <a href="Btable.html#unlink">Btable#unlink</a> method:</p>
 <pre class="prettyprint source"><code>myDataStore.unlink(some160bitKey, (err) => {
   console.log('The file ' + (err ? 'WAS NOT' : 'WAS') + ' removed!');
-});</code></pre><h3>Use the Streaming Interfaces</h3><p>When reading or writing larger files, you may not wish to buffer everything 
-into memory. In these cases, use the <a href="Btable.html#createReadStream">Btable#createReadStream</a> and 
+});
+</code></pre>
+<h3>Use the Streaming Interfaces</h3>
+<p>When reading or writing larger files, you may not wish to buffer everything
+into memory. In these cases, use the <a href="Btable.html#createReadStream">Btable#createReadStream</a> and
 <a href="Btable.html#createWriteStream">Btable#createWriteStream</a> methods:</p>
 <pre class="prettyprint source"><code>myDataStore.createReadStream(some160bitKey, (err, readableStream) => {
   if (err) {
@@ -149,7 +170,9 @@ into memory. In these cases, use the <a href="Btable.html#createReadStream">Btab
   readableStream.on('error', (err) => {
     console.log('Failed to read file:', err.message);
   });
-});</code></pre><pre class="prettyprint source"><code>myDataStore.createWriteStream(some160bitKey, (err, writableStream) => {
+});
+</code></pre>
+<pre class="prettyprint source"><code>myDataStore.createWriteStream(some160bitKey, (err, writableStream) => {
   if (err) {
     // handle error
   }
@@ -166,7 +189,8 @@ into memory. In these cases, use the <a href="Btable.html#createReadStream">Btab
   writableStream.write(Buffer.from([/* ... */]));
   writableStream.write(Buffer.from([/* ... */]));
   writableStream.end();
-});</code></pre>
+});
+</code></pre>
 </article>
 
 </section>
@@ -181,20 +205,22 @@ into memory. In these cases, use the <a href="Btable.html#createReadStream">Btab
 </div>
 </div>
 
-<div class="modal fade" id="searchResults">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Search results</h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div>
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 
 <footer>
 
@@ -204,7 +230,7 @@ into memory. In these cases, use the <a href="Btable.html#createReadStream">Btab
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
@@ -212,7 +238,9 @@ into memory. In these cases, use the <a href="Btable.html#createReadStream">Btab
 
 <script src="scripts/docstrap.lib.js"></script>
 <script src="scripts/toc.js"></script>
-<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
 
 <script>
 $( function () {
@@ -222,7 +250,7 @@ $( function () {
 		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
 	} );
 
-	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
 		var $this = $( this );
 
 		var example = $this.find( "code" );
@@ -240,24 +268,25 @@ $( function () {
 		if ( lang ) {
 
 			$this
-			.addClass( lang )
+			.addClass( "sunlight-highlight-" + lang )
 			.addClass( "linenums" )
 			.html( example.html() );
 
 		}
 	} );
 
-	$('pre').each(function(i, block) {
-		hljs.highlightBlock(block);
-	});
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
 
 	$.catchAnchorLinks( {
         navbarOffset: 10
 	} );
 	$( "#toc" ).toc( {
 		anchorName  : function ( i, heading, prefix ) {
-			var id = $( heading ).attr( "id" );
-			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+			return $( heading ).attr( "id" ) || ( prefix + i );
 		},
 		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
 		showAndHide : false,
@@ -283,11 +312,13 @@ $( function () {
 <!--Google Analytics-->
 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		SearcherDisplay.init();
-	});
-</script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
 
 </body>
 </html>

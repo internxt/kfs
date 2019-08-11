@@ -9,8 +9,7 @@
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-
-	<script src="scripts/highlight.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
 
 	<link type="text/css" rel="stylesheet" href="styles/site.storj.css">
 
@@ -21,7 +20,8 @@
 <div class="navbar navbar-default navbar-fixed-top ">
 <div class="container">
 	<div class="navbar-header">
-		<a class="navbar-brand" style="background-image:url(img/storj-kfs.svg)"  href="index.html">KFS</a>
+		<a class="navbar-brand" href="index.html"><img class="branding-logo" src="img/storj-kfs.svg"
+		alt="logo"/>KFS</a>
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
@@ -60,16 +60,18 @@
 			</li>
 			
 		</ul>
-		<div class="col-sm-3 col-md-4">
-            <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        
 	</div>
 
 </div>
@@ -92,9 +94,11 @@
 </header>
 
 <article>
-    <p>KFS comes bundles with a handy command line interface for dealing with your 
+    <p>KFS comes bundles with a handy command line interface for dealing with your
 databases. You can access this tool by installing the package globally:</p>
-<pre class="prettyprint source"><code>npm install -g kfs</code></pre><p>Once the installation completes, you can use the <code>kfs</code> command. To see usage 
+<pre class="prettyprint source"><code>npm install -g kfs
+</code></pre>
+<p>Once the installation completes, you can use the <code>kfs</code> command. To see usage
 information, run:</p>
 <pre class="prettyprint source"><code>Usage: kfs [options] [command]
 
@@ -113,33 +117,52 @@ information, run:</p>
 
     -h, --help          output usage information
     -V, --version       output the version number
-    -d, --db &lt;db_path>  path the kfs database to use (default: /home/bookchin/.kfs/default)</code></pre><h3>Writing a File To KFS</h3><p>There are two ways to write a file to a KFS database:</p>
+    -d, --db &lt;db_path>  path the kfs database to use (default: /home/bookchin/.kfs/default)
+</code></pre>
+<h3>Writing a File To KFS</h3>
+<p>There are two ways to write a file to a KFS database:</p>
 <ol>
 <li>Supplying an optional path to an existing file</li>
 <li>Reading from STDIN</li>
 </ol>
 <p>To write a file that exists on the file system already, just supply it's path:</p>
-<pre class="prettyprint source"><code>kfs write somefilekey /path/to/my/file.bin</code></pre><p>To have the CLI read from STDIN, just pipe the output of another program to it:</p>
-<pre class="prettyprint source"><code>cat /path/to/my/file.bin | kfs write somefilekey</code></pre><p>If an error is encountered, the process will terminate and write the error 
+<pre class="prettyprint source"><code>kfs write somefilekey /path/to/my/file.bin
+</code></pre>
+<p>To have the CLI read from STDIN, just pipe the output of another program to it:</p>
+<pre class="prettyprint source"><code>cat /path/to/my/file.bin | kfs write somefilekey
+</code></pre>
+<p>If an error is encountered, the process will terminate and write the error
 message to STDERR.</p>
-<h3>Reading a File From KFS</h3><p>There are two ways to read a file from a KFS database:</p>
+<h3>Reading a File From KFS</h3>
+<p>There are two ways to read a file from a KFS database:</p>
 <ol>
 <li>Supplying a path to write the output</li>
 <li>Writing to STDOUT</li>
 </ol>
 <p>To read from a KFS and write it to a file, just supply a path:</p>
-<pre class="prettyprint source"><code>kfs read somefilekey /path/to/write/file.webm</code></pre><p>To have the CLI write to STDOUT, just pipe the output to another program:</p>
-<pre class="prettyprint source"><code>kfs read somefilekey | mplayer -</code></pre><p>If an error is encountered, the process will terminate and write the error 
+<pre class="prettyprint source"><code>kfs read somefilekey /path/to/write/file.webm
+</code></pre>
+<p>To have the CLI write to STDOUT, just pipe the output to another program:</p>
+<pre class="prettyprint source"><code>kfs read somefilekey | mplayer -
+</code></pre>
+<p>If an error is encountered, the process will terminate and write the error
 message to STDERR.</p>
-<h3>Unlinking a File From KFS</h3><p>To unlink (or mark for deletion), simply provide the file key:</p>
-<pre class="prettyprint source"><code>kfs unlink somefilekey</code></pre><p>If an error is encountered, the process will terminate and write the error 
+<h3>Unlinking a File From KFS</h3>
+<p>To unlink (or mark for deletion), simply provide the file key:</p>
+<pre class="prettyprint source"><code>kfs unlink somefilekey
+</code></pre>
+<p>If an error is encountered, the process will terminate and write the error
 message to STDERR.</p>
-<h3>Getting Stats for a KFS</h3><p>You can see the amount of space available for a given file key:</p>
+<h3>Getting Stats for a KFS</h3>
+<p>You can see the amount of space available for a given file key:</p>
 <pre class="prettyprint source"><code>kfs stat somefilekey
-246.s    34359738368</code></pre><p>This writes the S-bucket index and the number of bytes available to STDOUT. 
+246.s    34359738368 
+</code></pre>
+<p>This writes the S-bucket index and the number of bytes available to STDOUT.
 You can also view this in a human readable form with the <code>-h</code> option:</p>
 <pre class="prettyprint source"><code>kfs stat somefilekey -h
-246.s    32.0 GiB</code></pre>
+246.s    32.0 GiB
+</code></pre>
 </article>
 
 </section>
@@ -154,20 +177,22 @@ You can also view this in a human readable form with the <code>-h</code> option:
 </div>
 </div>
 
-<div class="modal fade" id="searchResults">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Search results</h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div>
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 
 <footer>
 
@@ -177,7 +202,7 @@ You can also view this in a human readable form with the <code>-h</code> option:
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
@@ -185,7 +210,9 @@ You can also view this in a human readable form with the <code>-h</code> option:
 
 <script src="scripts/docstrap.lib.js"></script>
 <script src="scripts/toc.js"></script>
-<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
 
 <script>
 $( function () {
@@ -195,7 +222,7 @@ $( function () {
 		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
 	} );
 
-	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
 		var $this = $( this );
 
 		var example = $this.find( "code" );
@@ -213,24 +240,25 @@ $( function () {
 		if ( lang ) {
 
 			$this
-			.addClass( lang )
+			.addClass( "sunlight-highlight-" + lang )
 			.addClass( "linenums" )
 			.html( example.html() );
 
 		}
 	} );
 
-	$('pre').each(function(i, block) {
-		hljs.highlightBlock(block);
-	});
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
 
 	$.catchAnchorLinks( {
         navbarOffset: 10
 	} );
 	$( "#toc" ).toc( {
 		anchorName  : function ( i, heading, prefix ) {
-			var id = $( heading ).attr( "id" );
-			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+			return $( heading ).attr( "id" ) || ( prefix + i );
 		},
 		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
 		showAndHide : false,
@@ -256,11 +284,13 @@ $( function () {
 <!--Google Analytics-->
 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		SearcherDisplay.init();
-	});
-</script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
 
 </body>
 </html>

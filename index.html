@@ -9,8 +9,7 @@
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-
-	<script src="scripts/highlight.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
 
 	<link type="text/css" rel="stylesheet" href="styles/site.storj.css">
 
@@ -21,7 +20,8 @@
 <div class="navbar navbar-default navbar-fixed-top ">
 <div class="container">
 	<div class="navbar-header">
-		<a class="navbar-brand" style="background-image:url(img/storj-kfs.svg)"  href="index.html">KFS</a>
+		<a class="navbar-brand" href="index.html"><img class="branding-logo" src="img/storj-kfs.svg"
+		alt="logo"/>KFS</a>
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
@@ -60,16 +60,18 @@
 			</li>
 			
 		</ul>
-		<div class="col-sm-3 col-md-4">
-            <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        
 	</div>
 
 </div>
@@ -106,26 +108,34 @@
 
 
     <section class="readme-section">
-        <article><h1>KFS (Kademlia File Store)</h1><p><a href="https://travis-ci.org/Storj/kfs"><img src="https://img.shields.io/travis/Storj/kfs.svg?style=flat-square" alt="Build Status"></a>
+        <article><h1>KFS (Kademlia File Store)</h1>
+<p><a href="https://travis-ci.org/Storj/kfs"><img src="https://img.shields.io/travis/Storj/kfs.svg?style=flat-square" alt="Build Status"></a>
 <a href="https://coveralls.io/r/Storj/kfs"><img src="https://img.shields.io/coveralls/Storj/kfs.svg?style=flat-square" alt="Coverage Status"></a>
 <a href="https://www.npmjs.com/package/kfs"><img src="https://img.shields.io/npm/v/kfs.svg?style=flat-square" alt="NPM"></a>
 <a href="https://raw.githubusercontent.com/storj/kfs/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL3.0-blue.svg?style=flat-square" alt="License"></a></p>
-<p>The KFS system describes a method for managing the storage layer of nodes on 
-the <a href="https://storj.io">Storj Network</a> by creating a sharded local database 
-where content-addressable data is placed in a shard using the same routing 
+<p>The KFS system describes a method for managing the storage layer of nodes on
+the <a href="https://storj.io">Storj Network</a> by creating a sharded local database
+where content-addressable data is placed in a shard using the same routing
 metric and algorithm used by the Kademlia distributed hash table.</p>
-<p>Be sure to read about the 
+<p>Be sure to read about the
 <a href="https://storj.github.io/kfs/tutorial-about.html">motivation and how it works</a>!</p>
-<h2>Quick Start</h2><p>Install the <code>kfs</code> package using <a href="https://npmjs.org" title="Node Package Manager">Node Package Manager</a>.</p>
-<pre class="prettyprint source"><code>npm install kfs --build-from-source --save</code></pre><p>This will install <code>kfs</code> as a dependency of your own project. See the 
-<a href="https://storj.github.io/kfs/">documentation</a> for in-depth usage details. 
+<h2>Quick Start</h2>
+<p>Install the <code>kfs</code> package using <a href="https://npmjs.org" title="Node Package Manager">Node Package Manager</a>.</p>
+<pre class="prettyprint source"><code>npm install kfs --save
+</code></pre>
+<p>This will install <code>kfs</code> as a dependency of your own project. See the
+<a href="https://storj.github.io/kfs/">documentation</a> for in-depth usage details.
 You can also install globally to use the <code>kfs</code> command line utility.</p>
 <pre class="prettyprint source"><code>const kfs = require('kfs');
 const store = kfs('path/to/store');
 
 store.writeFile('some key', Buffer.from('some data'), (err) => {
   console.log(err || 'File written to store!');
-});</code></pre><h2>License</h2><p>KFS - A Local File Storage System Inspired by Kademlia<br>Copyright (C) 2016 Storj Labs, Inc</p>
+});
+</code></pre>
+<h2>License</h2>
+<p>KFS - A Local File Storage System Inspired by Kademlia<br>
+Copyright (C) 2016 Storj Labs, Inc</p>
 <p>This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -158,20 +168,22 @@ along with this program.  If not, see [http://www.gnu.org/licenses/].</p></artic
 </div>
 </div>
 
-<div class="modal fade" id="searchResults">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Search results</h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div>
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 
 <footer>
 
@@ -181,7 +193,7 @@ along with this program.  If not, see [http://www.gnu.org/licenses/].</p></artic
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
@@ -189,7 +201,9 @@ along with this program.  If not, see [http://www.gnu.org/licenses/].</p></artic
 
 <script src="scripts/docstrap.lib.js"></script>
 <script src="scripts/toc.js"></script>
-<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
 
 <script>
 $( function () {
@@ -199,7 +213,7 @@ $( function () {
 		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
 	} );
 
-	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
 		var $this = $( this );
 
 		var example = $this.find( "code" );
@@ -217,24 +231,25 @@ $( function () {
 		if ( lang ) {
 
 			$this
-			.addClass( lang )
+			.addClass( "sunlight-highlight-" + lang )
 			.addClass( "linenums" )
 			.html( example.html() );
 
 		}
 	} );
 
-	$('pre').each(function(i, block) {
-		hljs.highlightBlock(block);
-	});
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
 
 	$.catchAnchorLinks( {
         navbarOffset: 10
 	} );
 	$( "#toc" ).toc( {
 		anchorName  : function ( i, heading, prefix ) {
-			var id = $( heading ).attr( "id" );
-			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+			return $( heading ).attr( "id" ) || ( prefix + i );
 		},
 		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
 		showAndHide : false,
@@ -260,11 +275,13 @@ $( function () {
 <!--Google Analytics-->
 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		SearcherDisplay.init();
-	});
-</script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
 
 </body>
 </html>
