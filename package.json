@@ -10,7 +10,7 @@
     "test": "npm run testsuite && npm run linter",
     "testsuite": "mocha test/* --recursive --exit",
     "linter": "jshint --config .jshintrc ./index.js ./lib ./test",
-    "coverage": "istanbul cover _mocha -- --recursive",
+    "coverage": "nyc npm run testsuite",
     "generate-docs": "mkdir -p ./jsdoc && rm -r ./jsdoc && jsdoc index.js lib -r -R README.md -u ./doc -c .jsdoc.json --verbose -d ./jsdoc && mkdir -p jsdoc/doc/img && cp -r doc/img/* jsdoc/doc/img",
     "deploy-docs": "gh-pages -d jsdoc --repo git@github.com:internxt/kfs.git",
     "benchmark": "node perf/index.js exec"
@@ -42,13 +42,13 @@
     "leveldown": "^5.1.1",
     "merge": "^1.2.0",
     "mkdirp": "^0.5.1",
+    "nyc": "^14.1.1",
     "readable-stream": "^3.4.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "coveralls": "^3.0.6",
     "gh-pages": "^2.1.1",
-    "istanbul": "^0.4.5",
     "jsdoc": "^3.6.3",
     "jshint": "^2.9.3",
     "memdown": "^5.0.0",
