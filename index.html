@@ -11,7 +11,7 @@
 	<![endif]-->
 	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
 
-	<link type="text/css" rel="stylesheet" href="styles/site.storj.css">
+	<link type="text/css" rel="stylesheet" href="styles/site.yeti.css">
 
 </head>
 
@@ -20,7 +20,7 @@
 <div class="navbar navbar-default navbar-fixed-top ">
 <div class="container">
 	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html"><img class="branding-logo" src="img/storj-kfs.svg"
+		<a class="navbar-brand" href="index.html"><img class="branding-logo" src="doc/img/inxt-logo.svg"
 		alt="logo"/>KFS</a>
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
 			<span class="icon-bar"></span>
@@ -109,22 +109,22 @@
 
     <section class="readme-section">
         <article><h1>KFS (Kademlia File Store)</h1>
-<p><a href="https://travis-ci.org/Storj/kfs"><img src="https://img.shields.io/travis/Storj/kfs.svg?style=flat-square" alt="Build Status"></a>
-<a href="https://coveralls.io/r/Storj/kfs"><img src="https://img.shields.io/coveralls/Storj/kfs.svg?style=flat-square" alt="Coverage Status"></a>
+<p><a href="https://travis-ci.org/internxt/kfs"><img src="https://img.shields.io/travis/internxt/kfs.svg?style=flat-square" alt="Build Status"></a>
+<a href="https://coveralls.io/r/internxt/kfs"><img src="https://img.shields.io/coveralls/internxt/kfs.svg?style=flat-square" alt="Coverage Status"></a>
 <a href="https://www.npmjs.com/package/kfs"><img src="https://img.shields.io/npm/v/kfs.svg?style=flat-square" alt="NPM"></a>
 <a href="https://raw.githubusercontent.com/storj/kfs/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL3.0-blue.svg?style=flat-square" alt="License"></a></p>
 <p>The KFS system describes a method for managing the storage layer of nodes on
-the <a href="https://storj.io">Storj Network</a> by creating a sharded local database
+the <a href="https://internxt.com">Internxt Network</a> by creating a sharded local database
 where content-addressable data is placed in a shard using the same routing
 metric and algorithm used by the Kademlia distributed hash table.</p>
 <p>Be sure to read about the
-<a href="https://storj.github.io/kfs/tutorial-about.html">motivation and how it works</a>!</p>
+<a href="https://internxt.github.io/kfs/tutorial-about.html">motivation and how it works</a>!</p>
 <h2>Quick Start</h2>
 <p>Install the <code>kfs</code> package using <a href="https://npmjs.org" title="Node Package Manager">Node Package Manager</a>.</p>
 <pre class="prettyprint source"><code>npm install kfs --save
 </code></pre>
 <p>This will install <code>kfs</code> as a dependency of your own project. See the
-<a href="https://storj.github.io/kfs/">documentation</a> for in-depth usage details.
+<a href="https://internxt.github.io/kfs/">documentation</a> for in-depth usage details.
 You can also install globally to use the <code>kfs</code> command line utility.</p>
 <pre class="prettyprint source"><code>const kfs = require('kfs');
 const store = kfs('path/to/store');
