@@ -1,7 +1,7 @@
 KFS (Kademlia File Store)
 =========================
 
-[![Build Status](https://img.shields.io/travis/internxt/kfs.svg?style=flat-square)](https://travis-ci.org/internxt/kfs)
+[![Build Status](https://travis-ci.com/internxt/kfs.svg?branch=master)](https://travis-ci.com/internxt/kfs)
 [![Coverage Status](https://img.shields.io/coveralls/internxt/kfs.svg?style=flat-square)](https://coveralls.io/r/internxt/kfs)
 [![NPM](https://img.shields.io/npm/v/kfs.svg?style=flat-square)](https://www.npmjs.com/package/kfs)
 [![License](https://img.shields.io/badge/license-GPL3.0-blue.svg?style=flat-square)](https://raw.githubusercontent.com/storj/kfs/master/LICENSE)
