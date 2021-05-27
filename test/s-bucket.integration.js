@@ -20,7 +20,7 @@ describe('Sbucket/Integration', function() {
     if (utils.fileDoesExist(TMP_DIR)) {
       rimraf.sync(TMP_DIR);
     }
-    mkdirp(TMP_DIR, function() {
+    mkdirp(TMP_DIR).then(() => {
       bucket = new Sbucket(BUCKET_PATH);
       bucket.open(done);
     });
