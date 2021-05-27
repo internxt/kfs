@@ -6,8 +6,7 @@ const kfs = require('..');
 const program = require('commander');
 const path = require('path');
 const fs = require('fs');
-const {homedir} = require('os');
-const async = require('async');
+const { homedir } = require('os');
 
 const HOME = homedir();
 const DEFAULT_DB = path.join(HOME, '.kfs', 'default');
@@ -16,7 +15,7 @@ function _openDatabase(callback) {
   let db;
 
   try {
-    db = kfs(program.db);
+    db = kfs(program.opts().db);
   } catch (err) {
     return callback(err);
   }
@@ -70,7 +69,7 @@ function _writeFileToDatabase(fileKey, filePath) {
 };
 
 function _readFileFromDatabase(fileKey, outPath) {
-   _openDatabase((err, db) => {
+  _openDatabase((err, db) => {
     if (err) {
       process.stderr.write('[error] ' + err.message);
       process.exit(1);
@@ -108,7 +107,7 @@ function _readFileFromDatabase(fileKey, outPath) {
         readableStream.pipe(process.stdout);
       }
     });
- });
+  });
 }
 
 function _unlinkFileFromDatabase(fileKey) {
@@ -157,9 +156,9 @@ function _statDatabase(keyOrIndex, opts) {
 
       let spacing = 2;
 
-      stats = stats.map(function(sBucketStats) {
+      stats = stats.map(function (sBucketStats) {
         let perc = sBucketStats.sBucketStats.size /
-                   sBucketStats.sBucketStats.free;
+          sBucketStats.sBucketStats.free;
 
         sBucketStats.sBucketStats.perc = (perc * 100).toFixed(2);
 
@@ -201,8 +200,8 @@ function _listItemsInDatabase(bucketIndex, env) {
     }
 
     bucketIndex = !isNaN(bucketIndex)
-                ? Number(bucketIndex)
-                : bucketIndex;
+      ? Number(bucketIndex)
+      : bucketIndex;
 
     db.list(bucketIndex, (err, keys) => {
       if (err) {
